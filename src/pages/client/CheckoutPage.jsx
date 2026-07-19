@@ -215,61 +215,51 @@ export default function CheckoutPage() {
               <h2 className="font-bold text-lg text-charcoal dark:text-white mb-5">
                 {t('checkout.delivery_method')}
               </h2>
-              {allItemsFreeDelivery ? (
-                <div className="flex items-center gap-3 p-4 rounded-2xl bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-green-500 text-white">
-                    ✓
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm text-green-700 dark:text-green-400">
-                      {t('common.free_delivery')}
-                    </p>
-                    <p className="text-xs text-green-600 dark:text-green-500 mt-0.5">
-                      {t('checkout.free_delivery_desc')}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {DELIVERY_OPTIONS.map((option) => {
-                    const Icon = option.icon
-                    const active = deliveryType === option.value
-                    return (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() => setDeliveryType(option.value)}
-                        className={`relative flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-200 ${
-                          active
-                            ? 'border-charcoal dark:border-white bg-charcoal-50 dark:bg-charcoal-700'
-                            : 'border-charcoal-100 dark:border-charcoal-600 hover:border-charcoal-300 dark:hover:border-charcoal-500'
-                        }`}
-                      >
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                          active ? 'bg-charcoal dark:bg-white' : 'bg-charcoal-100 dark:bg-charcoal-700'
-                        }`}>
-                          <Icon size={18} className={active ? 'text-white dark:text-charcoal' : 'text-charcoal-500 dark:text-charcoal-300'} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className={`font-semibold text-sm ${active ? 'text-charcoal dark:text-white' : 'text-charcoal-600 dark:text-charcoal-300'}`}>
-                            {option.label}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {DELIVERY_OPTIONS.map((option) => {
+                  const Icon = option.icon
+                  const active = deliveryType === option.value
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setDeliveryType(option.value)}
+                      className={`relative flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-200 ${
+                        active
+                          ? 'border-charcoal dark:border-white bg-charcoal-50 dark:bg-charcoal-700'
+                          : 'border-charcoal-100 dark:border-charcoal-600 hover:border-charcoal-300 dark:hover:border-charcoal-500'
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                        active ? 'bg-charcoal dark:bg-white' : 'bg-charcoal-100 dark:bg-charcoal-700'
+                      }`}>
+                        <Icon size={18} className={active ? 'text-white dark:text-charcoal' : 'text-charcoal-500 dark:text-charcoal-300'} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`font-semibold text-sm ${active ? 'text-charcoal dark:text-white' : 'text-charcoal-600 dark:text-charcoal-300'}`}>
+                          {option.label}
+                        </p>
+                        <p className="text-xs text-charcoal-400 mt-0.5">{option.description}</p>
+                        {allItemsFreeDelivery ? (
+                          <p className="text-sm font-black mt-1 text-green-600 dark:text-green-400">
+                            {t('common.free_delivery')}
                           </p>
-                          <p className="text-xs text-charcoal-400 mt-0.5">{option.description}</p>
+                        ) : (
                           <p className={`text-sm font-black mt-1 ${active ? 'text-charcoal dark:text-white' : 'text-charcoal-500 dark:text-charcoal-400'}`}>
                             +{formatPrice(option.fee)}
                           </p>
-                        </div>
-                        {/* Radio dot */}
-                        <div className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center ${
-                          active ? 'border-charcoal dark:border-white' : 'border-charcoal-300 dark:border-charcoal-600'
-                        }`}>
-                          {active && <div className="w-2.5 h-2.5 rounded-full bg-charcoal dark:bg-white" />}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
+                        )}
+                      </div>
+                      {/* Radio dot */}
+                      <div className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center ${
+                        active ? 'border-charcoal dark:border-white' : 'border-charcoal-300 dark:border-charcoal-600'
+                      }`}>
+                        {active && <div className="w-2.5 h-2.5 rounded-full bg-charcoal dark:bg-white" />}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
 
             {/* ── Customer Info ── */}

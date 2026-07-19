@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Eye, ChevronDown, Building2, Home, Calendar } from 'lucide-react'
+import { Eye, ChevronDown, Building2, Home, Calendar, Copy, Check } from 'lucide-react'
 import Sidebar from '../../components/admin/Sidebar'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Modal from '../../components/ui/Modal'
@@ -25,8 +25,33 @@ const DATE_OPTIONS = [
 export default function OrdersPage() {
   const [statusFilter, setStatusFilter] = useState('all')
   const [dateFilter, setDateFilter] = useState('all')
+  const [deliveryFilter, setDeliveryFilter] = useState('all')
+  const [simFilter, setSimFilter] = useState('all')
   const { orders, loading, updateOrderStatus } = useAdminOrders({ status: statusFilter, dateFilter })
   const [selectedOrder, setSelectedOrder] = useState(null)
+  const [copiedPhone, setCopiedPhone] = useState(null)
+
+  const copyPhone = async (phone) => {
+    try {
+      await navigator.clipboard.writeText(phone)
+      setCopiedPhone(phone)
+      toast.success('Phone number copied!')
+      setTimeout(() => setCopiedPhone(null), 2000)
+    } catch {
+      toast.error('Failed to copy')
+    }
+  }
+
+  const filteredOrders = orders.filter((order) => {
+    if (deliveryFilter !== 'all' && order.delivery_type !== deliveryFilter) return false
+    if (simFilter !== 'all') {
+      const phone = order.phone || ''
+      if (simFilter === '05' && !phone.startsWith('05')) return false
+      if (simFilter === '06' && !phone.startsWith('06')) return false
+      if (simFilter === '07' && !phone.startsWith('07')) return false
+    }
+    return true
+  })
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
@@ -82,10 +107,36 @@ export default function OrdersPage() {
             ))}
           </div>
 
+          {/* Delivery & Sim Type Filters */}
+          <div className="flex items-center gap-3 flex-wrap mb-6">
+            {/* Delivery Type */}
+            <select
+              value={deliveryFilter}
+              onChange={(e) => setDeliveryFilter(e.target.value)}
+              className="input-field py-1.5 text-xs w-auto pr-8"
+            >
+              <option value="all">All Delivery</option>
+              <option value="home">Home</option>
+              <option value="desk">Office / Desk</option>
+            </select>
+
+            {/* Sim Type */}
+            <select
+              value={simFilter}
+              onChange={(e) => setSimFilter(e.target.value)}
+              className="input-field py-1.5 text-xs w-auto pr-8"
+            >
+              <option value="all">All SIM Types</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+            </select>
+          </div>
+
           {/* Table */}
           {loading ? (
             <PageLoader />
-          ) : orders.length === 0 ? (
+          ) : filteredOrders.length === 0 ? (
             <EmptyState type="orders" title="No orders" description="No orders found for this filter." />
           ) : (
             <div className="bg-white dark:bg-charcoal-800 rounded-2xl shadow-soft overflow-hidden">
@@ -94,7 +145,7 @@ export default function OrdersPage() {
                   <thead>
                     <tr className="text-left text-xs text-charcoal-400 uppercase tracking-wider border-b border-charcoal-100 dark:border-charcoal-700">
                       <th className="px-6 py-3 font-semibold">Customer</th>
-                      <th className="px-6 py-3 font-semibold hidden md:table-cell">Wilaya</th>
+                      <th className="px-6 py-3 font-semibold hidden md:table-cell">Location</th>
                       <th className="px-6 py-3 font-semibold hidden lg:table-cell">Delivery</th>
                       <th className="px-6 py-3 font-semibold hidden lg:table-cell">Items</th>
                       <th className="px-6 py-3 font-semibold">Total</th>
@@ -104,7 +155,7 @@ export default function OrdersPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-charcoal-50 dark:divide-charcoal-700">
-                    {orders.map((order) => {
+                    {filteredOrders.map((order) => {
                       const s = ORDER_STATUSES[order.status] || ORDER_STATUSES.new
                       return (
                         <tr
@@ -113,10 +164,22 @@ export default function OrdersPage() {
                         >
                           <td className="px-6 py-3">
                             <p className="font-semibold text-charcoal dark:text-white">{order.customer_name}</p>
-                            <p className="text-xs text-charcoal-400">{order.phone}</p>
+                            <button
+                              onClick={() => copyPhone(order.phone)}
+                              className="text-xs text-charcoal-400 hover:text-charcoal dark:hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Click to copy"
+                            >
+                              {order.phone}
+                              {copiedPhone === order.phone ? (
+                                <Check size={11} className="text-green-500" />
+                              ) : (
+                                <Copy size={11} className="opacity-0 group-hover:opacity-100" />
+                              )}
+                            </button>
                           </td>
-                          <td className="px-6 py-3 text-charcoal-500 dark:text-charcoal-400 hidden md:table-cell">
-                            {order.wilaya}
+                          <td className="px-6 py-3 text-charcoal-500 dark:text-charcoal-400 hidden md:table-cell text-xs">
+                            <p>{order.wilaya}</p>
+                            {order.commune && <p className="text-charcoal-400">{order.commune}</p>}
                           </td>
                           <td className="px-6 py-3 hidden lg:table-cell">
                             <div className="flex items-center gap-1.5 text-charcoal-500 dark:text-charcoal-400">
@@ -167,7 +230,7 @@ export default function OrdersPage() {
                 </table>
               </div>
               <div className="px-6 py-3 border-t border-charcoal-100 dark:border-charcoal-700 text-xs text-charcoal-400">
-                {orders.length} order{orders.length !== 1 ? 's' : ''}
+                {filteredOrders.length} order{filteredOrders.length !== 1 ? 's' : ''}
               </div>
             </div>
           )}
@@ -229,7 +292,18 @@ export default function OrdersPage() {
                 </div>
                 <div>
                   <p className="text-charcoal-400 text-xs">Phone</p>
-                  <p className="font-semibold text-charcoal dark:text-white">{selectedOrder.phone}</p>
+                  <button
+                    onClick={() => copyPhone(selectedOrder.phone)}
+                    className="font-semibold text-charcoal dark:text-white flex items-center gap-1.5 hover:text-charcoal dark:hover:text-charcoal-200 transition-colors"
+                    title="Click to copy"
+                  >
+                    {selectedOrder.phone}
+                    {copiedPhone === selectedOrder.phone ? (
+                      <Check size={13} className="text-green-500" />
+                    ) : (
+                      <Copy size={13} className="text-charcoal-400" />
+                    )}
+                  </button>
                 </div>
                 <div>
                   <p className="text-charcoal-400 text-xs">Wilaya</p>
