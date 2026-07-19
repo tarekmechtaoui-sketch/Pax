@@ -138,6 +138,15 @@ export default function ProductDetailPage() {
             </span>
           </div>
 
+          {/* Delivery Info */}
+          <div className={`flex items-center gap-2 mb-6 px-4 py-3 rounded-xl text-sm font-semibold ${
+            product.free_delivery
+              ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+              : 'bg-charcoal-50 dark:bg-charcoal-800 text-charcoal-500 dark:text-charcoal-300'
+          }`}>
+            {product.free_delivery ? '🚚 ' + t('common.free_delivery') : '📦 ' + t('common.shipping_info')}
+          </div>
+
           {/* Quantity */}
           {inStock && (
             <div className="mb-6">

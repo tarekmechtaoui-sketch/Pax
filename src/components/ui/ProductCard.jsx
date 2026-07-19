@@ -52,6 +52,11 @@ export default function ProductCard({ product }) {
               {t('common.featured')}
             </div>
           )}
+          {product.free_delivery && product.stock > 0 && (
+            <div className="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
+              {t('common.free_delivery')}
+            </div>
+          )}
         </div>
       </Link>
 

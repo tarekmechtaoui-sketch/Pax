@@ -82,6 +82,7 @@ export default function AdminProductsPage() {
                 className="input-field pl-10"
               />
             </div>
+            <Button onClick={openCreate}><Plus size={15} /> Add Product</Button>
           </div>
 
           {/* Filters */}
@@ -160,9 +161,14 @@ export default function AdminProductsPage() {
                                 <p className="font-semibold text-charcoal dark:text-white line-clamp-1">
                                   {p.name}
                                 </p>
-                                {p.featured && (
-                                  <span className="text-[10px] text-amber-600 font-semibold">★ Featured</span>
-                                )}
+                                <div className="flex items-center gap-2">
+                                  {p.featured && (
+                                    <span className="text-[10px] text-amber-600 font-semibold">★ Featured</span>
+                                  )}
+                                  {p.free_delivery && (
+                                    <span className="text-[10px] text-green-600 font-semibold">🚚 Free Delivery</span>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </td>

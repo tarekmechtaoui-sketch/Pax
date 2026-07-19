@@ -21,6 +21,7 @@ export default function ProductForm({ product, categories, onSave, onCancel }) {
       stock: product?.stock || 0,
       status: product?.status || 'active',
       featured: product?.featured || false,
+      free_delivery: product?.free_delivery || false,
     },
   })
 
@@ -35,6 +36,7 @@ export default function ProductForm({ product, categories, onSave, onCancel }) {
       stock: product?.stock || 0,
       status: product?.status || 'active',
       featured: product?.featured || false,
+      free_delivery: product?.free_delivery || false,
     })
     setImages(product?.images || [])
   }, [product?.id])
@@ -168,7 +170,7 @@ export default function ProductForm({ product, categories, onSave, onCancel }) {
             <option value="out_of_stock">Out of Stock</option>
           </select>
         </div>
-        <div className="flex items-end pb-1">
+        <div className="flex flex-col gap-3">
           <label className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -176,6 +178,14 @@ export default function ProductForm({ product, categories, onSave, onCancel }) {
               {...register('featured')}
             />
             <span className="text-sm font-semibold text-charcoal dark:text-white">Featured Product</span>
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              className="w-4 h-4 rounded accent-charcoal"
+              {...register('free_delivery')}
+            />
+            <span className="text-sm font-semibold text-charcoal dark:text-white">Free Delivery</span>
           </label>
         </div>
       </div>

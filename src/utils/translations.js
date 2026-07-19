@@ -6,6 +6,8 @@ export const translations = {
     'common.in_stock': 'In Stock',
     'common.out_of_stock': 'Out of Stock',
     'common.featured': 'Featured',
+    'common.free_delivery': 'Free Delivery',
+    'common.shipping_info': 'Shipping: 500 DA (Desk) / 700 DA (Home)',
     'common.add_to_cart': 'Add to Cart',
     'common.added': 'Added!',
     'common.no_image': 'No image',
@@ -113,6 +115,7 @@ export const translations = {
     'checkout.desk_desc': 'Pick up from the nearest delivery agency',
     'checkout.home_label': 'Home Delivery',
     'checkout.home_desc': 'Delivered directly to your address',
+    'checkout.free_delivery_desc': 'All items in your cart qualify for free delivery',
 
     // Order Confirmation
     'order.confirmed': 'Order Confirmed!',
@@ -156,6 +159,8 @@ export const translations = {
     'common.in_stock': 'En stock',
     'common.out_of_stock': 'Rupture de stock',
     'common.featured': 'Vedette',
+    'common.free_delivery': 'Livraison gratuite',
+    'common.shipping_info': 'Livraison : 500 DA (Bureau) / 700 DA (Domicile)',
     'common.add_to_cart': 'Ajouter au panier',
     'common.added': 'Ajouté !',
     'common.no_image': 'Pas d\'image',
@@ -263,6 +268,7 @@ export const translations = {
     'checkout.desk_desc': 'Récupérez dans l\'agence de livraison la plus proche',
     'checkout.home_label': 'Livraison à domicile',
     'checkout.home_desc': 'Livré directement à votre adresse',
+    'checkout.free_delivery_desc': 'Tous les articles de votre panier sont éligibles à la livraison gratuite',
 
     // Order Confirmation
     'order.confirmed': 'Commande confirmée !',
@@ -306,6 +312,8 @@ export const translations = {
     'common.in_stock': 'متوفر',
     'common.out_of_stock': 'نفد من المخزون',
     'common.featured': 'مميز',
+    'common.free_delivery': 'توصيل مجاني',
+    'common.shipping_info': 'التوصيل: 500 دج (مكتب) / 700 دج (المنزل)',
     'common.add_to_cart': 'أضف إلى السلة',
     'common.added': 'تمت الإضافة!',
     'common.no_image': 'لا توجد صورة',
@@ -413,6 +421,7 @@ export const translations = {
     'checkout.desk_desc': 'استلم من أقرب وكالة توصيل',
     'checkout.home_label': 'توصيل إلى المنزل',
     'checkout.home_desc': 'يُوصَّل مباشرة إلى عنوانك',
+    'checkout.free_delivery_desc': 'جميع العناصر في سلتك مؤهلة للتوصيل المجاني',
 
     // Order Confirmation
     'order.confirmed': 'تم تأكيد الطلب!',
