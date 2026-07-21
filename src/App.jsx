@@ -9,6 +9,7 @@ import { LanguageProvider } from './contexts/LanguageContext'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import MetaPixelTracker from './components/MetaPixelTracker'
 
 // Client Pages
 import HomePage from './pages/client/HomePage'
@@ -67,6 +68,7 @@ export default function App() {
                 },
               }}
             />
+            <MetaPixelTracker />
             <Routes>
               {/* ── Client Routes ── */}
               <Route path="/" element={<ClientLayout><HomePage /></ClientLayout>} />
